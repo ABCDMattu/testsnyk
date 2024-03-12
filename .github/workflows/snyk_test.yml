@@ -15,6 +15,6 @@ jobs:
           args: --sarif-file-output=snyk.sarif
       - name: Count total number of vulnerabilities
         run: |
-          RESULTS_LENGTH=$(jq '.runs[0].results | length' your_file.json)
+          RESULTS_LENGTH=$(jq '.runs[0].results | length' snyk.sarif)
           echo "RESULTS_LENGTH=$RESULTS_LENGTH" >> $GITHUB_ENV
           echo $RESULTS_LENGTH
