@@ -22,10 +22,8 @@ jobs:
         uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: |
-            {
-            "text": "*The Snyk scan result for repo is : ${{ job.status }}* \n 
-                    *Number of vulnarabilities : ${{ env.RESULTS_LENGTH }}* \n
-                    *Detail*: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            }
+               {
+                 "text": "*The Snyk scan result for repo is : ${{ job.status }}* \n*Number of vulnerabilities : ${{ env.RESULTS_LENGTH }}* \n*Detail*: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+               }
         env:
           SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
