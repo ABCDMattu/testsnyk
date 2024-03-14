@@ -18,15 +18,14 @@ jobs:
           RESULTS_LENGTH=$(jq '.runs[0].results | length' snyk.sarif)
           echo "RESULTS_LENGTH=$RESULTS_LENGTH" >> $GITHUB_ENV
           echo $RESULTS_LENGTH
-      - name: Slack Alert
-        uses: 8398a7/action-slack@v3
+      - name: Send notification on Slack using Webhooks
+        uses: slackapi/slack-github-action@v1.24.0
         with:
-           status: ${{ job.status }}
-           fields: repo,commit,author,eventName,ref
-           text: |
-                *The Snyk scan result for repo is : ${{ job.status }}*
-                *Number of vulnarabilities : ${{ env.RESULTS_LENGTH }}*
-                *Detail*: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          payload: |
+            {
+            "text": "*The Snyk scan result for repo is : ${{ job.status }}* \n 
+                    *Number of vulnarabilities : ${{ env.RESULTS_LENGTH }}* \n
+                    *Detail*: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }
         env:
-           SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
-        if: always() # Pick up events even if the job fails or is canceled.
+          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
